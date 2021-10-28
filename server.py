@@ -83,15 +83,22 @@ def do_admin_login():
 
 
         #print("calling een.login")        
+        print(f"Login attempt for {request.form['username']}")
         if een.login(username=request.form['username'], password=request.form['password']):
             session['logged_in'] = True
             session['name'] = f"{een.user['first_name']} {een.user['last_name']}"
-
-
+            
         else:
             flash('wrong password!')
+            return redirect('/bad_password')
         
         return redirect('/')
+
+
+@app.route("/bad_password")
+def login_with_bad_password():
+    return render_template("bad_password.html", template_values={})
+    
 
 
 @app.route("/logout")
