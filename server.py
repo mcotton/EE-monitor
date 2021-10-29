@@ -118,6 +118,7 @@ def logout():
     return redirect('/login')
 
 
+@app.route("/2x2")
 @app.route("/")
 @login_required
 def hello():
@@ -135,6 +136,41 @@ def hello():
     else:
         return redirect('/login')
 
+
+@app.route("/3x3")
+@login_required
+def hello3x3():
+    if een and een.user:
+
+        ret = {
+                "options": {},
+                "username": een.user['first_name'] + ' ' + een.user['last_name'],
+                "cameras": sorted([(i.name, i.camera_id) for i in een.cameras if i.camera_id and i.name]),
+                "auth_key":  een.session.cookies['auth_key']
+            }
+
+        
+        return render_template("3x3.html", template_values=ret)
+    else:
+        return redirect('/login')
+
+
+@app.route("/4x4")
+@login_required
+def hello4x4():
+    if een and een.user:
+
+        ret = {
+                "options": {},
+                "username": een.user['first_name'] + ' ' + een.user['last_name'],
+                "cameras": sorted([(i.name, i.camera_id) for i in een.cameras if i.camera_id and i.name]),
+                "auth_key":  een.session.cookies['auth_key']
+            }
+
+        
+        return render_template("4x4.html", template_values=ret)
+    else:
+        return redirect('/login')
 
 
 @app.template_filter()
